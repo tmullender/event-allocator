@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Input Page</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+        #sortable li span { position: absolute; margin-left: -1.3em; }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+        } );
+
+        var submitOrder = function() {
+            $("#order").val($( "#sortable" ).sortable( "toArray" ))
+            $("#input").submit()
+        }
+    </script>
+</head>
+<body>
+    <form id="input" name="input" method="POST" enctype="multipart/form-data">
+        <label for="name">Pupil</label>
+        <select name="name" id="name" >
+            #foreach( $person in $people )
+            <option value="$person.uniqueId">$person</option>
+            #end
+        </select>
+        <ul id="sortable">
+            #foreach( $event in $events )
+            <li id="$event.uniqueId">$event</li>
+            #end
+        </ul>
+        <input id="order" type="hidden" name="order">
+        <input type="button" value="Submit" onclick="submitOrder()">
+    </form>
+    <a href="/store" >Save Preferences</a>
+    <a href="/" >Add Names and Events</a>
+</body>
+</html>
