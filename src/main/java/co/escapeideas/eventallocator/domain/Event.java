@@ -39,4 +39,8 @@ public class Event {
     public String getName() {
         return name;
     }
+
+    public String getDay() {
+        return day;
+    }
 }

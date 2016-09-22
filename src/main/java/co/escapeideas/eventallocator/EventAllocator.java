@@ -60,7 +60,7 @@ public class EventAllocator {
     LOG.debug("allocating {} to {} from {}", person, eventId, Arrays.toString(preference));
     final Event event = events.get(eventId);
     List<Person> allocated = getAllocatedPeople(event);
-    if(allocated.size() < event.getCapacity()) {
+    if(allocated.size() < event.getCapacity() && meetsConstraints(person, event)) {
       allocated.add(person);
       if(preference.length <= 1) {
         preferences.remove(person);
@@ -71,6 +71,15 @@ public class EventAllocator {
       return true;
     }
     return false;
+  }
+
+  private boolean meetsConstraints(Person person, Event event) {
+    for (Event existing : allocations.keySet()){
+      if (event.getDay().equals(existing.getDay()) && allocations.get(existing).contains(person)){
+        return false;
+      }
+    }
+    return true;
   }
 
   private String[] removeAllocated(final String eventId, final String[] preference) {
