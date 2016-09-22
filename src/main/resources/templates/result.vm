@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Result Page</title>
+</head>
+<body>
+    #foreach ($entry in $result)
+        <div>
+            <h5>$entry.getKey()</h5>
+            <ul id="$entry.getKey().uniqueId">
+            #foreach ($person in $entry.getValue())
+                <li>$person</li>
+            #end
+            </ul>
+        </div>
+    #end
+    <a href="/input" >Preferences</a>
+    <a href="/" >Add Names and Events</a>
+    <a href="/store" >Save Preferences</a>
+</body>
+</html>

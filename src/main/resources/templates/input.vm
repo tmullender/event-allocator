@@ -1,14 +1,14 @@
 <html>
 <head>
     <title>Input Page</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
     <style>
         #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
         #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
         #sortable li span { position: absolute; margin-left: -1.3em; }
     </style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/webjars/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
     <script>
         $( function() {
             $( "#sortable" ).sortable();
@@ -35,9 +35,10 @@
             #end
         </ul>
         <input id="order" type="hidden" name="order">
-        <input type="button" value="Submit" onclick="submitOrder()">
+        <input id="button" type="button" value="Submit" onclick="submitOrder()">
     </form>
     <a href="/store" >Save Preferences</a>
     <a href="/" >Add Names and Events</a>
+    <a href="/process" >Assign People</a>
 </body>
 </html>

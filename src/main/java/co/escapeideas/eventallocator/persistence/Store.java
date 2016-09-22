@@ -1,9 +1,10 @@
 package co.escapeideas.eventallocator.persistence;
 
+import java.util.List;
+import java.util.Map;
+
 import co.escapeideas.eventallocator.domain.Event;
 import co.escapeideas.eventallocator.domain.Person;
-
-import java.util.List;
 
 /**
  * Created by tim on 21/09/2016.
@@ -16,9 +17,12 @@ public interface Store {
 
     List<Person> getNewPeople();
 
-    List<Event> getEvents();
+    Map<String, Event> getEvents();
+
+    Map<Person,String[]> getPreferences();
 
     void addPreference(String personId, String[] split);
 
     void save();
+
 }

@@ -20,11 +20,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:1.3.3.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-velocity:1.3.3.RELEASE")
     compile("org.springframework.boot:spring-boot-devtools:1.3.3.RELEASE")
+    compile("org.webjars:jquery:1.12.4")
+    compile("org.webjars:jquery-ui:1.12.1")
     testCompile("org.springframework.boot:spring-boot-starter-test:1.3.3.RELEASE")
     testCompile("net.sourceforge.htmlunit:htmlunit:2.18")
     testCompile("junit:junit:4.12")
-    testCompile("com.pholser:junit-quickcheck-core:0.6")
-    testCompile("com.pholser:junit-quickcheck-generators:0.6")
 }
 
 bootRun {

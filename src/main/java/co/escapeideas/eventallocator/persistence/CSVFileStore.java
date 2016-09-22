@@ -1,14 +1,23 @@
 package co.escapeideas.eventallocator.persistence;
 
-import co.escapeideas.eventallocator.domain.Event;
-import co.escapeideas.eventallocator.domain.Person;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.io.*;
-import java.util.*;
+import co.escapeideas.eventallocator.domain.Event;
+import co.escapeideas.eventallocator.domain.Person;
 
 /**
  * Created by tim on 21/09/2016.
@@ -17,7 +26,6 @@ import java.util.*;
 public class CSVFileStore implements Store{
 
     private static final Logger LOG = LoggerFactory.getLogger(CSVFileStore.class);
-
 
     private final File storeFile;
 
@@ -69,12 +77,18 @@ public class CSVFileStore implements Store{
     }
 
     @Override
-    public List<Event> getEvents() {
-        return new ArrayList<>(allEvents.values());
+    public Map<String, Event> getEvents() {
+        return new HashMap<>(allEvents);
+    }
+
+    @Override
+    public Map<Person, String[]> getPreferences() {
+        return new HashMap<>(preferences);
     }
 
     @Override
     public void addPreference(String personId, String[] events) {
+        LOG.debug("Adding preference for {}:{}", personId, Arrays.toString(events));
         final Person person = todo.remove(personId);
         preferences.put(person, events);
     }
@@ -99,6 +113,7 @@ public class CSVFileStore implements Store{
         data[1] = person.getGroup();
         final String[] preference = preferences.get(person);
         System.arraycopy(preference, 0, data, 2, preference.length);
+        LOG.debug("saving line: {}", Arrays.toString(data));
         return StringUtils.join(data, ",");
     }
 }

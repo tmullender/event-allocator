@@ -31,4 +31,12 @@ public class Event {
     public String getUniqueId() {
         return uniqueId;
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

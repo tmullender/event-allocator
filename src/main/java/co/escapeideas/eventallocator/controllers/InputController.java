@@ -1,6 +1,7 @@
 package co.escapeideas.eventallocator.controllers;
 
-import co.escapeideas.eventallocator.persistence.Store;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.io.IOException;
+import co.escapeideas.eventallocator.persistence.Store;
 
 @Controller
 @RequestMapping("/input")
@@ -24,7 +24,7 @@ public class InputController {
   @RequestMapping(method = RequestMethod.GET)
   public String get(Model model) {
     model.addAttribute("people", store.getNewPeople());
-    model.addAttribute("events", store.getEvents());
+    model.addAttribute("events", store.getEvents().values());
     return "input";
   }
 
