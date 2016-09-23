@@ -2,7 +2,9 @@ package co.escapeideas.eventallocator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,12 +12,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSelect;
-import com.gargoylesoftware.htmlunit.html.HtmlUnorderedList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,13 +45,17 @@ public class InputControllerTest {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080/input");
     final HtmlSelect select = (HtmlSelect) page.getElementById("name");
     assertEquals(30, select.getOptionSize());
-    final HtmlUnorderedList events = (HtmlUnorderedList) page.getElementById("sortable");
+    final HtmlElement events = (HtmlElement) page.getElementById("events");
     assertEquals(5, events.getChildElementCount());
   }
 
   @Test
   public void testPost() throws Exception {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080/input");
+    final Iterator<DomElement> events = page.getElementById("events").getChildElements().iterator();
+    events.next().click();
+    events.next().click();
+    events.next().click();
     final HtmlButtonInput submit = (HtmlButtonInput) page.getElementById("button");
     final HtmlPage result = submit.click();
     final HtmlSelect select = (HtmlSelect) result.getElementById("name");

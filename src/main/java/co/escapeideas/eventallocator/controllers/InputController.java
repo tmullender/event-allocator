@@ -1,6 +1,7 @@
 package co.escapeideas.eventallocator.controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -9,6 +10,7 @@ import co.escapeideas.eventallocator.domain.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +27,15 @@ public class InputController {
   @Autowired
   private Store store;
 
+  @Value("${input.preference.cutoff:3}")
+  private int cutoff = 3;
+
   @RequestMapping(method = RequestMethod.GET)
   public String get(Model model) {
     final List<Person> newPeople = store.getNewPeople();
     Collections.sort(newPeople, new PersonComparator());
     model.addAttribute("people", newPeople);
+    model.addAttribute("cutoff", cutoff);
     model.addAttribute("events", store.getEvents().values());
     return "input";
   }

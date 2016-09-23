@@ -2,6 +2,7 @@ package co.escapeideas.eventallocator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,8 +35,6 @@ import static org.junit.Assert.assertEquals;
 @WebIntegrationTest
 public class ProcessControllerTest {
 
-  private final RestTemplate template = new TestRestTemplate();
-
   @Before
   public void setup() throws IOException {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080");
@@ -54,6 +53,10 @@ public class ProcessControllerTest {
 
   private void submitInput() throws IOException {
     final HtmlPage inputPage = new WebClient().getPage("http://localhost:8080/input");
+    final Iterator<DomElement> events = inputPage.getElementById("events").getChildElements().iterator();
+    events.next().click();
+    events.next().click();
+    events.next().click();
     final HtmlButtonInput submit = (HtmlButtonInput) inputPage.getElementById("button");
     submit.click();
   }
@@ -62,8 +65,13 @@ public class ProcessControllerTest {
   public void testGet() throws Exception {
     final HtmlPage processPage = new WebClient().getPage("http://localhost:8080/process");
     final DomNodeList<DomElement> events = processPage.getElementsByTagName("h5");
-    assertEquals(5, events.size());
-    final HtmlUnorderedList list = (HtmlUnorderedList) processPage.getElementById("");
+    assertEquals(3, events.size());
+    HtmlUnorderedList list = (HtmlUnorderedList) processPage.getElementById("ID-635226");
+    assertEquals(8, list.getChildElementCount());
+    list = (HtmlUnorderedList) processPage.getElementById("ID-243103917");
+    assertEquals(6, list.getChildElementCount());
+    list = (HtmlUnorderedList) processPage.getElementById("ID-2118511976");
+    assertEquals(7, list.getChildElementCount());
   }
 
 }

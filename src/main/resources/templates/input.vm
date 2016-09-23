@@ -3,37 +3,60 @@
     <title>Input Page</title>
     <link rel="stylesheet" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
     <style>
-        #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-        #sortable li span { position: absolute; margin-left: -1.3em; }
+        #events { list-style-type: none; margin: 0; padding: 0; width: 40%; display:inline-block; height: 50%; overflow:scroll; }
+        #selection { list-style-type: none; margin: 0; padding: 0; width: 40%; display:inline-block; }
+        .selected { border: 1px; }
     </style>
     <script src="/webjars/jquery/1.12.4/jquery.min.js"></script>
     <script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $( function() {
-            $( "#sortable" ).sortable();
-            $( "#sortable" ).disableSelection();
-        } );
+        $( function () {
+            $(".event").on("click", function() {
+                var selected = $(this);
+                var target = $(".next-target").removeClass("next-target");
+                var current = target.data("event");
+                if (current) {
+                  $("#" + current).show()
+                }
+                target.data("event", selected.attr('id')).find("p").text(selected.find("p").text());
+                var siblings = target.parent().children();
+                siblings.eq((siblings.index(target) + 1) % siblings.length).addClass("next-target");
+                selected.hide()
+            });
+        });
 
         var submitOrder = function() {
-            $("#order").val($( "#sortable" ).sortable( "toArray" ))
+            $("#order").val($("div.preference").map(function() { return $(this).data("event") }).get().join())
             $("#input").submit()
         }
     </script>
 </head>
 <body>
     <form id="input" name="input" method="POST" enctype="multipart/form-data">
-        <label for="name">Pupil</label>
-        <select name="name" id="name" >
-            #foreach( $person in $people )
-            <option value="$person.uniqueId">$person</option>
-            #end
-        </select>
-        <ul id="sortable">
+        <div>
+            <label for="name">Pupil</label>
+            <select name="name" id="name" >
+                #foreach( $person in $people )
+                <option value="$person.uniqueId">$person</option>
+                #end
+            </select>
+        </div>
+        <div id="events" >
             #foreach( $event in $events )
-            <li id="$event.uniqueId">$event</li>
+            <div id="$event.uniqueId" class="event"><p>$event</p></div>
             #end
-        </ul>
+        </div>
+        <div id="selection" >
+            #foreach( $id in [1..$cutoff] )
+            <div id="preference-$id"
+            #if ($foreach.first)
+                 class="preference next-target"
+            #else
+                 class="preference"
+            #end
+            ><p>Preference $id</p></div>
+            #end
+        </div>
         <input id="order" type="hidden" name="order">
         <input id="button" type="button" value="Submit" onclick="submitOrder()">
     </form>
