@@ -1,16 +1,16 @@
 package co.escapeideas.eventallocator;
 
-import java.io.File;
-
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,8 +30,8 @@ public class UploadControllerTest {
   @Test
   public void testGet() throws Exception {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080");
-    final String names = page.getElementById("names").getAttribute("type");
-    final String events = page.getElementById("events").getAttribute("type");
+    final String names = page.getElementById("upload-names").getAttribute("type");
+    final String events = page.getElementById("upload-events").getAttribute("type");
     assertEquals("file", names);
     assertEquals("file", events);
   }

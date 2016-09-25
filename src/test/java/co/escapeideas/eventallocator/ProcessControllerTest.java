@@ -1,25 +1,17 @@
 package co.escapeideas.eventallocator;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlUnorderedList;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -53,7 +45,7 @@ public class ProcessControllerTest {
 
   private void submitInput() throws IOException {
     final HtmlPage inputPage = new WebClient().getPage("http://localhost:8080/input");
-    final Iterator<DomElement> events = inputPage.getElementById("events").getChildElements().iterator();
+    final Iterator<DomElement> events = inputPage.getElementById("selection-events").getChildElements().iterator();
     events.next().click();
     events.next().click();
     events.next().click();

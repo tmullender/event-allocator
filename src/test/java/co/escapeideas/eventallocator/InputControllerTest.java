@@ -1,9 +1,6 @@
 package co.escapeideas.eventallocator;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.gargoylesoftware.htmlunit.WebClient;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,22 +43,22 @@ public class InputControllerTest {
   @Test
   public void testGet() throws Exception {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080/input");
-    final HtmlSelect select = (HtmlSelect) page.getElementById("name");
+    final HtmlSelect select = (HtmlSelect) page.getElementById("selection-name");
     assertEquals(30, select.getOptionSize());
-    final HtmlElement events = (HtmlElement) page.getElementById("events");
+    final HtmlElement events = (HtmlElement) page.getElementById("selection-events");
     assertEquals(5, events.getChildElementCount());
   }
 
   @Test
   public void testPost() throws Exception {
     final HtmlPage page = new WebClient().getPage("http://localhost:8080/input");
-    final Iterator<DomElement> events = page.getElementById("events").getChildElements().iterator();
+    final Iterator<DomElement> events = page.getElementById("selection-events").getChildElements().iterator();
     events.next().click();
     events.next().click();
     events.next().click();
     final HtmlButtonInput submit = (HtmlButtonInput) page.getElementById("button");
     final HtmlPage result = submit.click();
-    final HtmlSelect select = (HtmlSelect) result.getElementById("name");
+    final HtmlSelect select = (HtmlSelect) result.getElementById("selection-name");
     assertEquals(29, select.getOptionSize());
   }
 }
