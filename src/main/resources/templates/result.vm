@@ -1,8 +1,14 @@
 <html>
 <head>
+    <link rel="stylesheet" href="/css/default.css">
     <title>Result Page</title>
 </head>
 <body>
+    <div class="links">
+        <a href="/input" >Preferences</a>
+        <a href="/" >Add Names and Events</a>
+        <a href="/store" >Save Preferences</a>
+    </div>
     #foreach ($entry in $result)
         <div>
             <h5>$entry.getKey()</h5>
@@ -13,8 +19,6 @@
             </ul>
         </div>
     #end
-    <a href="/input" >Preferences</a>
-    <a href="/" >Add Names and Events</a>
-    <a href="/store" >Save Preferences</a>
+
 </body>
 </html>

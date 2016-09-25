@@ -1,0 +1,28 @@
+body {
+    width: 90%;
+    margin: 50px auto;
+}
+
+#selection-events {
+    height: 50%;
+    overflow: auto;
+}
+
+.event {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid;
+    margin: 10px;
+    float: left;
+}
+
+.preference {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid;
+    margin: 10px auto;
+}
+
+.links {
+    float: right;
+}

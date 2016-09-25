@@ -1,15 +1,18 @@
 <html>
 <head>
+    <link rel="stylesheet" href="/css/default.css">
     <title>Upload Page</title>
 </head>
 <body>
+    <div class="links" >
+        <a href="/input">Pick Preferences</a>
+    </div>
     <form name="upload" method="POST" enctype="multipart/form-data">
-        <label for="names">Upload name list</label>
-        <input id="names" type="file" name="names">
-        <label for="names">Upload event list</label>
-        <input id="events" type="file" name="events">
+        <label for="upload-names">Upload name list</label>
+        <input id="upload-names" type="file" name="names">
+        <label for="upload-events">Upload event list</label>
+        <input id="upload-events" type="file" name="events">
         <input name="submit" type="submit" value="Upload">
     </form>
-    <a href="/input">Pick Preferences</a>
 </body>
 </html>

@@ -1,47 +1,31 @@
 <html>
 <head>
     <title>Input Page</title>
-    <link rel="stylesheet" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
-    <style>
-        #events { list-style-type: none; margin: 0; padding: 0; width: 40%; display:inline-block; height: 50%; overflow:scroll; }
-        #selection { list-style-type: none; margin: 0; padding: 0; width: 40%; display:inline-block; }
-        .selected { border: 1px; }
-    </style>
+    <link rel="stylesheet" href="/css/default.css">
     <script src="/webjars/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/webjars/jquery-ui/1.12.1/jquery-ui.js"></script>
+    <script src="/js/functions.js"></script>
     <script>
         $( function () {
-            $(".event").on("click", function() {
-                var selected = $(this);
-                var target = $(".next-target").removeClass("next-target");
-                var current = target.data("event");
-                if (current) {
-                  $("#" + current).show()
-                }
-                target.data("event", selected.attr('id')).find("p").text(selected.find("p").text());
-                var siblings = target.parent().children();
-                siblings.eq((siblings.index(target) + 1) % siblings.length).addClass("next-target");
-                selected.hide()
-            });
+            $(".event").on("click", onEventClick);
         });
-
-        var submitOrder = function() {
-            $("#order").val($("div.preference").map(function() { return $(this).data("event") }).get().join())
-            $("#input").submit()
-        }
     </script>
 </head>
 <body>
-    <form id="input" name="input" method="POST" enctype="multipart/form-data">
+    <div class="links" >
+        <a href="/store" >Save Preferences</a>
+        <a href="/" >Add Names and Events</a>
+        <a href="/process" >Assign People</a>
+    </div>
+    <form id="selection-input" name="input" method="POST" enctype="multipart/form-data">
         <div>
-            <label for="name">Pupil</label>
-            <select name="name" id="name" >
+            <label for="selection-name">Pupil</label>
+            <select name="name" id="selection-name" >
                 #foreach( $person in $people )
                 <option value="$person.uniqueId">$person</option>
                 #end
             </select>
         </div>
-        <div id="events" >
+        <div id="selection-events" >
             #foreach( $event in $events )
             <div id="$event.uniqueId" class="event"><p>$event</p></div>
             #end
@@ -58,10 +42,7 @@
             #end
         </div>
         <input id="order" type="hidden" name="order">
-        <input id="button" type="button" value="Submit" onclick="submitOrder()">
+        <input id="button" type="button" value="Submit" onclick="onSubmitClick()">
     </form>
-    <a href="/store" >Save Preferences</a>
-    <a href="/" >Add Names and Events</a>
-    <a href="/process" >Assign People</a>
 </body>
 </html>
